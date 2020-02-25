@@ -15,6 +15,7 @@ y = [i for i in range(0, 25)]
 # Coordinates of the agent.
 ag_coord = [(len(x)-1)/2+0.5, -0.5]
 ag_box = True
+ag_color = 'blue'
 
 # Variant 1
 x_length = np.linspace(0, len(x))
@@ -44,20 +45,7 @@ w3X = [x[len(x)-1]+1, x[len(x)-1]+2]
 w3Y = [y[len(y)-1]+1, y[len(y)-1]+2]
 
 w4X = [x[len(x)-1]+1, x[len(x)-1]+2]
-w4Y = [y[0],y[0]-1]
-
-# Drawing graphs.
-plt.plot(w1X, w1Y, color='red')
-plt.plot(w2X, w2Y, color='red')
-plt.plot(w3X, w3Y, color='red')
-plt.plot(w4X, w4Y, color='red')
-plt.scatter(ag_coord[0], ag_coord[1], color='blue')      # Agent
-
-plt.grid(color='black', linewidth=2, axis='both')
-ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
-ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
-plt.show()
-
+w4Y = [y[0], y[0]-1]
 
 # Fills in the grid cell occupied by the box.
 def box_in_position(x1, y1, y2):
@@ -69,10 +57,38 @@ def ag_fill():
     if ag_coord[1] < 0:
         ax.fill_between(0, 0, -3, color='black')
     elif ag_box:
-        ax.fill_between(ag_coord[0]-0.5,ag_coord[1]+0.5,ag_coord[1]-0.5, color='#F0E6E6')
+        ax.fill_between(ag_coord[0]-0.5, ag_coord[1]+0.5, ag_coord[1]-0.5, color='#F0E6E6')
     else:
-        box_in_position(ag_coord[0]-0.5,ag_coord[1]+0.5,ag_coord[1]-0.5)
+        box_in_position(ag_coord[0]-0.5, ag_coord[1]+0.5, ag_coord[1]-0.5)
 
 # Agent moves.
 def ag_moves():
-    plt.scatter(ag_coord[0], ag_coord[1], color='blue')
+    ag_coord[1] += 1
+    plt.scatter(ag_coord[0], ag_coord[1], color=ag_color)
+
+# Agent status (whether the box is transporting or not).
+def ag_status():
+    if ag_box:
+        ag_color = 'yellow'
+    else:
+        ag_color = 'blue'
+
+# Drawing graphs.
+plt.plot(w1X, w1Y, color='red')
+plt.plot(w2X, w2Y, color='red')
+plt.plot(w3X, w3Y, color='red')
+plt.plot(w4X, w4Y, color='red')
+if not ag_box:
+    ag_status(ag_color)
+    plt.scatter(ag_coord[0], ag_coord[1], color=ag_color)      # Agent
+else:
+    plt.scatter(ag_coord[0], ag_coord[1], color=ag_color)
+
+# ag_moves()
+# ag_fill()
+# ag_moves()
+# ag_fill()
+plt.grid(color='black', linewidth=2, axis='both')
+ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
+plt.show()
