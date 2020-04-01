@@ -2,6 +2,15 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
 
+#Starting data for the graph.
+#class GraphData:
+    #def __init__(self):
+        #self.x = [i for i in range(0, 5)]
+        #self.y = [i for i in range(0, 5)]
+
+#Contains methods for drawing the graph.
+#class Graph:
+
 fig = plt.figure()
 ax = plt.subplot()
 
@@ -9,8 +18,8 @@ ax = plt.subplot()
 box_coord = []
 
 # Defining the coordinate system
-x = [i for i in range(0, 25)]
-y = [i for i in range(0, 25)]
+x = [i for i in range(0, 5)]
+y = [i for i in range(0, 5)]
 
 # Coordinates of the agent.
 ag_coord = [(len(x)-1)/2+0.5, -0.5]
@@ -92,3 +101,9 @@ plt.grid(color='black', linewidth=2, axis='both')
 ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
 ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
 plt.show()
+
+def main():
+    print("Hello, world!")
+
+if __name__ == "__main__":
+    main()
