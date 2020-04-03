@@ -2,105 +2,99 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
 
-#Starting data for the graph.
-#class GraphData:
-    #def __init__(self):
-        #self.x = [i for i in range(0, 5)]
-        #self.y = [i for i in range(0, 5)]
+# Starting data for the graph.
+class GraphData:
+    def __init__(self):
+        # Defining the coordinate system
+        self.x = [i for i in range(0, 5)]
+        self.y = [i for i in range(0, 5)]
 
-#Contains methods for drawing the graph.
-#class Graph:
+        # Coordinates of the agent.
+        self.ag_coord = [(len(self.x)-1)/2+0.5, -0.5]
+        self.ag_box = True
+        self.ag_color = 'blue'
 
-fig = plt.figure()
-ax = plt.subplot()
+        # Coordinates of the upper-left points occupied by the box.
+        self.box_coordinates = []
 
-# Coordinates of the upper-left points occupied by the box.
-box_coord = []
+# Contains methods for drawing the graph.
+class Graph:
+    my_GraphData = GraphData()
+    fig = plt.figure()
+    ax = plt.subplot()
 
-# Defining the coordinate system
-x = [i for i in range(0, 5)]
-y = [i for i in range(0, 5)]
+    def __init__(self):
+        self.y1_width = 0
+        self.y2_width = len(self.my_GraphData.y)
+        self.x_length = np.linspace(0, len(self.my_GraphData.x))
 
-# Coordinates of the agent.
-ag_coord = [(len(x)-1)/2+0.5, -0.5]
-ag_box = True
-ag_color = 'blue'
+    def draw_graph(self):
+        Graph.ax.set_facecolor("black")
+        Graph.ax.fill_between(self.x_length, self.y1_width, self.y2_width, color='#F0E6E6')
 
-# Variant 1
-x_length = np.linspace(0, len(x))
-# y1_width = 0
-# y2_width = 10
-# ax.fill_between(x_length, y1_width, y2_width, color='black')
+        # Setting the grid parameters.
+        plt.title('Storehouse', color='white')
+        plt.xlabel('Length', color='white')
+        plt.ylabel('Width', color='white')
 
-# Variant 2
-ax.set_facecolor("black")
-y1_width = 0
-y2_width = len(y)
-ax.fill_between(x_length, y1_width, y2_width, color='#F0E6E6')
+        points = Graph.draw_graph_area()
+        # Drawing graphs.
+        plt.plot(points[0][0], points[0][1], color='red')
+        plt.plot(points[1][0], points[1][1], color='red')
+        plt.plot(points[2][0], points[2][1], color='red')
+        plt.plot(points[3][0], points[3][1], color='red')
 
-# Setting the grid parameters.
-plt.title('Storehouse', color='white')
-plt.xlabel('Length', color='white')
-plt.ylabel('Width', color='white')
+        plt.grid(color='black', linewidth=2, axis='both')
+        Graph.ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+        Graph.ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
+        plt.show()
 
-# Drawing the walls of the storehouse.
-w1X = [x[0]-1, x[0]]
-w1Y = [y[len(y)-1]+2, y[len(y)-1]+1]
+    # Drawing the walls of the storehouse.
+    def draw_graph_area(self):
+        w1x = [self.my_GraphData.x[0] - 1, self.my_GraphData.x[0]]
+        w1y = [self.my_GraphData.y[self.y2_width - 1] + 2, self.my_GraphData.y[self.y2_width - 1] + 1]
 
-w2X = [x[0]-1, x[0]]
-w2Y = [y[0]-1, y[0]]
+        w2x = [self.my_GraphData.x[0] - 1, self.my_GraphData.x[0]]
+        w2y = [self.my_GraphData.y[0] - 1, self.my_GraphData.y[0]]
 
-w3X = [x[len(x)-1]+1, x[len(x)-1]+2]
-w3Y = [y[len(y)-1]+1, y[len(y)-1]+2]
+        w3x = [self.my_GraphData.x[len(self.my_GraphData.x) - 1] + 1, self.my_GraphData.x[len(self.my_GraphData.x) - 1] + 2]
+        w3y = [self.my_GraphData.y[self.y2_width - 1] + 1, self.my_GraphData.y[self.y2_width - 1] + 2]
 
-w4X = [x[len(x)-1]+1, x[len(x)-1]+2]
-w4Y = [y[0], y[0]-1]
+        w4x = [self.my_GraphData.x[len(self.my_GraphData.x) - 1] + 1, self.my_GraphData.x[len(self.my_GraphData.x) - 1] + 2]
+        w4y = [self.my_GraphData.y[0], self.my_GraphData.y[0] - 1]
+        return [[w1x, w1y], [w2x, w2y], [w3x, w3y], [w4x, w4y]]
 
-# Fills in the grid cell occupied by the box.
-def box_in_position(x1, y1, y2):
-    ax.fill_between(x1, y1, y2, color='green')
-    box_coord.append((x1, y1))
+    # Fills in the grid cell occupied by the box.
+    def box_in_position(self, x1, y1, y2):
+        Graph.ax.fill_between(x1, y1, y2, color='green')
+        self.my_GraphData.box_coordinates.append((x1, y1))
 
-# Fills in the area that the agent left.
-def ag_fill():
-    if ag_coord[1] < 0:
-        ax.fill_between(0, 0, -3, color='black')
-    elif ag_box:
-        ax.fill_between(ag_coord[0]-0.5, ag_coord[1]+0.5, ag_coord[1]-0.5, color='#F0E6E6')
-    else:
-        box_in_position(ag_coord[0]-0.5, ag_coord[1]+0.5, ag_coord[1]-0.5)
+    # Fills in the area that the agent left.
+    def ag_fill(self):
+        if self.my_GraphData.ag_coord[1] < 0:
+            Graph.ax.fill_between(0, 0, -3, color='black')
+        elif self.my_GraphData.ag_box:
+            Graph.ax.fill_between(self.my_GraphData.ag_coord[0]-0.5, self.my_GraphData.ag_coord[1]+0.5, self.my_GraphData.ag_coord[1]-0.5, color='#F0E6E6')
+        else:
+            Graph.box_in_position(self.my_GraphData.ag_coord[0]-0.5, self.my_GraphData.ag_coord[1]+0.5, self.my_GraphData.ag_coord[1]-0.5)
 
-# Agent moves.
-def ag_moves():
-    ag_coord[1] += 1
-    plt.scatter(ag_coord[0], ag_coord[1], color=ag_color)
+    # Agent moves.
+    def ag_moves(self):
+        self.my_GraphData.ag_coord[1] += 1
+        plt.scatter(self.my_GraphData.ag_coord[0], self.my_GraphData.ag_coord[1], color=self.my_GraphData.ag_color)
 
-# Agent status (whether the box is transporting or not).
-def ag_status():
-    if ag_box:
-        ag_color = 'yellow'
-    else:
-        ag_color = 'blue'
+    # Agent status (whether the box is transporting or not).
+    def ag_status(self):
+        if self.my_GraphData.ag_box:
+            ag_color = 'yellow'
+        else:
+            ag_color = 'blue'
 
-# Drawing graphs.
-plt.plot(w1X, w1Y, color='red')
-plt.plot(w2X, w2Y, color='red')
-plt.plot(w3X, w3Y, color='red')
-plt.plot(w4X, w4Y, color='red')
-if not ag_box:
-    ag_status(ag_color)
-    plt.scatter(ag_coord[0], ag_coord[1], color=ag_color)      # Agent
-else:
-    plt.scatter(ag_coord[0], ag_coord[1], color=ag_color)
-
-# ag_moves()
-# ag_fill()
-# ag_moves()
-# ag_fill()
-plt.grid(color='black', linewidth=2, axis='both')
-ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
-ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
-plt.show()
+        if not self.my_GraphData.ag_box:
+            self.ag_status(ag_color)
+            plt.scatter(self.my_GraphData.ag_coord[0], self.my_GraphDataag_coord[1], color=self.my_GraphData.ag_color)      # Agent
+        else:
+            plt.scatter(self.my_GraphData.ag_coord[0], self.my_GraphData.ag_coord[1], color=self.my_GraphData.ag_color)
 
 def main():
     print("Hello, world!")
