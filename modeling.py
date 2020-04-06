@@ -37,7 +37,8 @@ class Graph:
         plt.xlabel('Length', color='white')
         plt.ylabel('Width', color='white')
 
-        points = Graph.draw_graph_area()
+        points = Graph.draw_graph_area(self)
+        Graph.ag_status(self)
         # Drawing graphs.
         plt.plot(points[0][0], points[0][1], color='red')
         plt.plot(points[1][0], points[1][1], color='red')
@@ -97,7 +98,8 @@ class Graph:
             plt.scatter(self.my_GraphData.ag_coord[0], self.my_GraphData.ag_coord[1], color=self.my_GraphData.ag_color)
 
 def main():
-    print("Hello, world!")
+    my_Graph = Graph()
+    my_Graph.draw_graph()
 
 if __name__ == "__main__":
     main()
