@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
 import numpy as np
+import random_gen as rg
 
 # Starting data for the graph.
 class GraphData:
@@ -93,13 +94,17 @@ class Graph:
 
         if not self.my_GraphData.ag_box:
             self.ag_status(ag_color)
-            plt.scatter(self.my_GraphData.ag_coord[0], self.my_GraphDataag_coord[1], color=self.my_GraphData.ag_color)      # Agent
+            plt.scatter(self.my_GraphData.ag_coord[0], self.my_GraphData.ag_coord[1], color=self.my_GraphData.ag_color)      # Agent
         else:
             plt.scatter(self.my_GraphData.ag_coord[0], self.my_GraphData.ag_coord[1], color=self.my_GraphData.ag_color)
 
 def main():
     my_Graph = Graph()
     my_Graph.draw_graph()
+    my_Random = rg.RandomGen(len(Graph.my_GraphData.x), my_Graph.y2_width)
+    random_boxes = my_Random.rand_box_gen(3)
+    print(random_boxes)
+    print(type(my_Graph.x_length))
 
 if __name__ == "__main__":
     main()
