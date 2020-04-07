@@ -39,4 +39,4 @@ class StoreHouse(gym.Env):
         self.action_episode_memory = []
 
         # Init storehouse
-        self.state = np.zeros((size,size,size),dtype=int)
+        self.state = np.zeros((size, size, size), dtype=int)

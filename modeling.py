@@ -47,6 +47,7 @@ class Graph:
         plt.plot(points[3][0], points[3][1], color='red')
 
         plt.grid(color='black', linewidth=2, axis='both')
+        Graph.color_boxes(self)
         Graph.ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
         Graph.ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
         plt.show()
@@ -98,13 +99,23 @@ class Graph:
         else:
             plt.scatter(self.my_GraphData.ag_coord[0], self.my_GraphData.ag_coord[1], color=self.my_GraphData.ag_color)
 
+    # Coloring random boxes.
+    def color_rand_boxes(self, box_coord):
+        for i in box_coord:
+            for i1 in self.my_GraphData.box_coordinates:
+                if i != i1:
+                    self.my_GraphData.box_coordinates.append((i[0], i[1]))
+
+    def color_boxes(self):
+        for i in self.my_GraphData.box_coordinates:
+            Graph.ax.fill_between(i[0], i[1], i[1] + 1, color='green')
+
 def main():
     my_Graph = Graph()
-    my_Graph.draw_graph()
     my_Random = rg.RandomGen(len(Graph.my_GraphData.x), my_Graph.y2_width)
     random_boxes = my_Random.rand_box_gen(3)
-    print(random_boxes)
-    print(type(my_Graph.x_length))
+    my_Graph.color_rand_boxes(random_boxes)
+    my_Graph.draw_graph()
 
 if __name__ == "__main__":
     main()
