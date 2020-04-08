@@ -47,7 +47,9 @@ class Graph:
         plt.plot(points[3][0], points[3][1], color='red')
 
         plt.grid(color='black', linewidth=2, axis='both')
-        Graph.color_boxes(self)
+        # Graph.color_boxes(self)
+        # for i in self.my_GraphData.box_coordinates:
+        #     Graph.ax.fill_between(i[0], i[1], i[1] - 1, color='green')
         Graph.ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
         Graph.ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
         plt.show()
@@ -70,7 +72,7 @@ class Graph:
     # Fills in the grid cell occupied by the box.
     def box_in_position(self, x1, y1, y2):
         Graph.ax.fill_between(x1, y1, y2, color='green')
-        self.my_GraphData.box_coordinates.append((x1, y1))
+        self.my_GraphData.box_coordinates.append([x1, y1])
 
     # Fills in the area that the agent left.
     def ag_fill(self):
@@ -101,10 +103,12 @@ class Graph:
 
     # Coloring random boxes.
     def color_rand_boxes(self, box_coord):
-        for i in box_coord:
-            for i1 in self.my_GraphData.box_coordinates:
-                if i != i1:
-                    self.my_GraphData.box_coordinates.append((i[0], i[1]))
+        if len(self.my_GraphData.box_coordinates) == 0:
+            self.my_GraphData.box_coordinates.extend(box_coord)
+        else:
+            for i in box_coord:
+                if (self.my_GraphData.box_coordinates.count(i) == 0):
+                    self.my_GraphData.box_coordinates.append([i[0], i[1]])
 
     def color_boxes(self):
         for i in self.my_GraphData.box_coordinates:
@@ -116,6 +120,8 @@ def main():
     random_boxes = my_Random.rand_box_gen(3)
     my_Graph.color_rand_boxes(random_boxes)
     my_Graph.draw_graph()
+    # print(type(my_Graph.my_GraphData.box_coordinates))
+    # print(type(random_boxes))
 
 if __name__ == "__main__":
     main()
