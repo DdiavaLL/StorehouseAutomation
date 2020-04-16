@@ -1,0 +1,62 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english,russian]{babel}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{cmap}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{multicol}
+\usepackage{url}
+\usepackage[center]{titlesec}
+\usepackage{mathtools}
+\textwidth=17cm
+\voffset=-1cm
+\hoffset=-0.5cm
+\topmargin=0cm
+\textheight=24.5cm
+\oddsidemargin=0pt
+
+\linespread{1.1}
+
+\pagestyle{fancy}
+\lhead{\bfseries Storehouse Automation}
+\rhead{\itshape 2019/2020}
+\fancyfoot{}
+
+\renewcommand{\theenumii}{\asbuk{enumii}}
+\AddEnumerateCounter{\asbuk}{\@asbuk}{\cyrm}
+
+\renewcommand{\to}{\longrightarrow}
+\newcommand{\tof}{\to\!\!.\ }
+\newcommand{\tod}{\Longrightarrow}
+\newcommand{\xtod}[1]{\xRightarrow{\text{#1\ } }}
+\newcommand{\alphabet}[2]{#1=\{#2\}}
+\newcommand{\salp}[1]{\alphabet{\Sigma}{#1}}
+
+\begin{document}
+\section*{Документация к проекту(курсовой работе) Storehouse Atomation.}
+\renewcommand{\theenumii}{\asbuk{enumii}}
+\AddEnumerateCounter{\asbuk}{\@asbuk}{\cyrm}
+\hrulefill
+
+\subsection*{Файл storehouse.py.}
+\subsubsection*{Файл содержит описание среды, с которой взаимодействует агент.}
+
+\begin{enumerate}
+\item Метод \_init\_(self) является конструктором класса среды. Происходит инициализация атрибутов:
+\begin{enumerate}
+\item Атрибут action\_space описывает формат допустимых действий.
+\item Атрибут observation\_space описывает формат допустимых наблюдений.
+\item Атрибут state описывает представление склада в виде матрицы, заполненной нулями.
+\end{enumerate}
+
+\end{enumerate}
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

@@ -13,8 +13,8 @@ class StoreHouse(gym.Env):
 
         Observation:
             Type: Box(4)
-            Num	Observation                 Min         Max
-            0	Cart Position             -4.8            4.8
+            Num	Observation                 Min                                    Max
+            0	Robot Position             (len(area)-1)/2+0.5, -0.5)            (len(area), len(area))
             1	Cart Velocity             -Inf            Inf
             2	Pole Angle                 -24 deg        24 deg
             3	Pole Velocity At Tip      -Inf            Inf
@@ -26,9 +26,9 @@ class StoreHouse(gym.Env):
             1	Put the box.
         """
     def __init__(self):
-        self.length = 10
-        self.width = 10
-        size = 10
+        self.length = 5
+        self.width = 5
+        size = 5
 
         # Define what the agent can do
         self.action_space = spaces.Discrete(2)
